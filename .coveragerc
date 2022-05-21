@@ -3,7 +3,6 @@
 [run]
 branch = True
 source = skmisc
-include = skmisc/*
 omit =
     setup.py
     */setup.py
