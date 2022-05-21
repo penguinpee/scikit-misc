@@ -87,14 +87,14 @@ cdef class loess_inputs:
         elif x.ndim == 2:
             p = x.shape[1]
         else:
-            raise ValueError("The array of indepedent varibales "
+            raise ValueError("The array of independent varibales "
                              "should be 2D at most!")
 
         if y.ndim != 1:
             raise ValueError("The array of dependent variables "
                              "should be 1D.")
         elif n != len(y):
-            raise ValueError("The independent and depedent varibales "
+            raise ValueError("The independent and dependent varibales "
                              "should have the same number of "
                              "observations.")
 
