@@ -36,7 +36,8 @@ __classifiers__ = [
     'Programming Language :: Python :: 3',
     'Topic :: Scientific/Engineering',
 ]
-__platforms__ = ['Linux', 'Mac OS-X', 'Unix', 'Windows' ]
+__platforms__ = ['Linux', 'Mac OS-X', 'Unix', 'Windows']
+__python_requires__ = ">=3.8"
 
 # BEFORE importing setuptools, remove MANIFEST. Otherwise it may
 # not be properly updated when the contents of directories change
@@ -159,6 +160,7 @@ def setup_package():
         package_data=get_package_data(),
         classifiers=__classifiers__,
         platforms=__platforms__,
+        python_requires=__python_requires__,
         configuration=configuration
     )
     setup(**metadata)

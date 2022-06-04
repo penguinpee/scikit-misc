@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.6, 3.9]
+        python-version: ["3.8", "3.10"]
 
     steps:
       - name: Checkout Code
@@ -68,7 +68,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.9]
+        python-version: ["3.10"]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -114,7 +114,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ["3.10"]
 
     steps:
       - name: Checkout Code
