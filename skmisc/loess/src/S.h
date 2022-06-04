@@ -10,19 +10,21 @@
  * ANSI standard conforming C compilers. The #else definition should
  * generate the version of the fortran subroutine & common block names x
  * handed to the local loader; e.g., "x_" in system V, Berkeley & 9th edition
+ *
+ * - Also, only recent (2022 onwards) MS compilers define __STD__
  */
 
 #ifdef lint
-#define F77_SUB(x) x
-#define F77_COM(x) x
+# define F77_SUB(x) x
+# define F77_COM(x) x
 #else
-#ifdef __STDC__
-#define F77_SUB(x) x##_
-#define F77_COM(x) x##_
-#else
-#define F77_SUB(x) x/**/_
-#define F77_COM(x) x/**/_
-#endif
+# if defined(__STDC__) || defined(_MSC_VER)
+#   define F77_SUB(x) x##_
+#   define F77_COM(x) x##_
+# else
+#   define F77_SUB(x) x/**/_
+#   define F77_COM(x) x/**/_
+# endif
 #endif
 
 #define NULL_ENTRY          ((int *)NULL)
