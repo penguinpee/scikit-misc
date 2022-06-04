@@ -5,39 +5,9 @@ Miscellaneous tools for data analysis and scientific computing.
 """
 import os
 import sys
+import builtins
 import subprocess
 
-import versioneer
-
-if sys.version_info[0] < 3:
-    import __builtin__ as builtins
-else:
-    import builtins
-
-__author__ = 'Hassan Kibirige'
-__email__ = 'has2k1@gmail.com'
-__description__ = "Miscellaneous tools for scientific computing."
-__license__ = 'BSD (3-clause)'
-__url__ = 'https://github.com/has2k1/scikit-misc'
-__project_urls__ = {
-    'Bug Tracker': 'https://github.com/has2k1/scikit-misc/issues',
-    'Documentation': 'https://has2k1.github.io/scikit-misc',
-    'Source Code': 'https://github.com/has2k1/scikit-misc'
-}
-__classifiers__ = [
-    'Intended Audience :: Science/Research',
-    'License :: OSI Approved :: BSD License',
-    'Operating System :: Unix',
-    'Operating System :: MacOS',
-    'Operating System :: Microsoft :: Windows',
-    'Operating System :: POSIX',
-    'Programming Language :: C',
-    'Programming Language :: Fortran',
-    'Programming Language :: Python :: 3',
-    'Topic :: Scientific/Engineering',
-]
-__platforms__ = ['Linux', 'Mac OS-X', 'Unix', 'Windows']
-__python_requires__ = ">=3.8"
 
 # BEFORE importing setuptools, remove MANIFEST. Otherwise it may
 # not be properly updated when the contents of directories change
@@ -50,41 +20,6 @@ if os.path.exists('MANIFEST'):
 # setup routine, to avoid attempting to load components that aren't
 # built yet. Copied from numpy
 builtins.__SKMISC_SETUP__ = True
-
-
-def check_dependencies():
-    """
-    Check for system level dependencies
-    """
-    pass
-
-
-def get_required_packages():
-    """
-    Return required packages
-
-    Plus any version tests and warnings
-    """
-    install_requires = ['numpy']
-    return install_requires
-
-
-def get_package_data():
-    """
-    Return package data
-
-    For example:
-
-        {'': ['*.txt', '*.rst'],
-         'hello': ['*.msg']}
-
-    means:
-        - If any package contains *.txt or *.rst files,
-          include them
-        - And include any *.msg files found in
-          the 'hello' package, too:
-    """
-    return {}
 
 
 def generate_cython():
@@ -118,56 +53,18 @@ def prepare_for_setup():
         generate_cython()
 
 
-def setup_requires():
-    """
-    Return required packages
-
-    Plus any version tests and warnings
-    """
-    from pkg_resources import parse_version
-    required = ['cython>=0.29.0']
-    numpy_requirement = 'numpy>=1.14.5'
-
-    try:
-        import numpy
-    except Exception:
-        required.append(numpy_requirement)
-    else:
-        if parse_version(numpy.__version__) < parse_version('1.14.5'):
-            required.append(numpy_requirement)
-
-    return required
-
-
 def setup_package():
-    from setuptools import find_packages
     # versioneer needs numpy cmdclass
     from numpy.distutils.core import setup, numpy_cmdclass
     metadata = dict(
         name='scikit-misc',
-        maintainer=__author__,
-        maintainer_email=__email__,
-        description=__description__,
-        long_description=__doc__,
-        license=__license__,
-        version=versioneer.get_version(),
-        cmdclass=versioneer.get_cmdclass(numpy_cmdclass),
-        url=__url__,
-        project_urls=__project_urls__,
-        install_requires=get_required_packages(),
-        setup_requires=setup_requires(),
-        packages=find_packages(),
-        package_data=get_package_data(),
-        classifiers=__classifiers__,
-        platforms=__platforms__,
-        python_requires=__python_requires__,
+        cmdclass=numpy_cmdclass,
         configuration=configuration
     )
     setup(**metadata)
 
 
 if __name__ == '__main__':
-    check_dependencies()
     prepare_for_setup()
     setup_package()
 

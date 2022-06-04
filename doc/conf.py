@@ -67,20 +67,30 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'scikit-misc'
-copyright = '2020, Hassan Kibirige'
+copyright = '2022, Hassan Kibirige'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 
 # The short X.Y version.
-
 try:
-    import skmisc
-    version = skmisc.__version__
-except ImportError:
-    version = 'unknown'
+    from importlib.metadata import version as _version
+finally:
+    version = _version('scikit-misc')
 
+# 1. remove +dirty if readthedocs modifies the repo,
+# 2. remove the 0.0 version created by setuptools_scm when clone is too shallow
+if on_rtd:
+    import re
+    p1 = re.compile(r'\+dirty$')
+    if p1.match(version):
+        version = p1.sub('', version)
+
+    p2 = re.compile(r'^0\.0\.post\d+\+g')
+    if p2.match(version):
+        commit = p2.sub('', version)
+        version = f'Commit: {commit}'
 
 # The full version, including alpha/beta/rc tags.
 release = version
